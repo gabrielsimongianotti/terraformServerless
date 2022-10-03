@@ -1,0 +1,39 @@
+          
+service: serverlessterraform
+
+frameworkVersion: '3'
+
+provider:
+  name: aws
+  runtime: nodejs14.x
+  apiGateway:
+    restApiId: b7w2iguhhe
+    restApiRootResourceId: myt5aw
+  region: us-east-1
+  iamManagedPolicies:
+    - 'arn:aws:iam::aws:policy/AmazonSNSFullAccess'
+
+  # region: us-east-1
+
+functions:
+  hello:
+    handler: handler.hello
+    events:
+      - http:
+          method: POST
+          path: /sms
+          
+package:
+  exclude:
+    - .terraform/**
+    - terraform.**
+    - .terraform.**
+    - .env
+    - .env.**
+    - .gitignore
+    - .git
+    - README.md
+    - package-lock.json
+    - node_modules/**
+    - '*.tf'
+
